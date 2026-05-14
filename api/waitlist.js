@@ -1,12 +1,18 @@
 // Serverless function: POST /api/waitlist
-// Adds an email to a Resend audience (https://resend.com). Welcome emails are
-// sent by configuring a Broadcast/automation in the Resend dashboard that
-// targets the audience, so this endpoint stays minimal.
+// 1. Adds the email to a Resend audience (the launch-day broadcast list).
+// 2. Sends a one-off welcome email via Resend's /emails endpoint.
+// Welcome-send failure is non-fatal — the contact still ends up on the list.
 //
 // Required environment variables (set in Vercel project settings):
-//   RESEND_API_KEY      - from https://resend.com/api-keys (audiences:write)
+//   RESEND_API_KEY      - from https://resend.com/api-keys
+//                         (needs audiences:write AND emails:send)
 //   RESEND_AUDIENCE_ID  - UUID of the audience to add contacts to
-//   ALLOWED_ORIGINS     - comma-separated, e.g. "https://taaruf.app,https://www.taaruf.app"
+//   RESEND_FROM_EMAIL   - e.g. "Taaruf <welcome@taaruf.dev>" (must be on a
+//                         verified Resend domain)
+//   ALLOWED_ORIGINS     - comma-separated, e.g.
+//                         "https://taaruf.app,https://www.taaruf.app"
+// Optional:
+//   RESEND_REPLY_TO     - reply-to address shown to recipients
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_EMAIL_LEN = 254;            // RFC 5321
@@ -38,6 +44,116 @@ function allowedOrigin(origin) {
     .filter(Boolean);
   if (!list.length) return true; // no allow-list configured (e.g. preview), allow
   return origin && list.includes(origin);
+}
+
+const WELCOME_SUBJECT = 'Welcome to Taaruf <3';
+const WELCOME_PREVIEW =
+  'A calm, structured conversation for Muslims considering marriage — built with intention.';
+
+const WELCOME_TEXT = `Welcome to Taaruf.
+
+At Taaruf, we want to make one of the most important conversations of your life feel calm again. So many of us hit the same quiet roadblock: you're getting to know someone for marriage and you don't actually know what to ask to be sure this is half your deen. Scraping questions together from Reddit threads or generic apps shouldn't be the answer — and it doesn't have to be.
+
+Our goal is to give Muslims a structured, mahram-supervised conversation built around the things that actually matter to a Muslim home: deen, family vision, lifestyle, career & finances, and the way two souls quietly fit together.
+
+As a new contact, you can expect:
+- An email when Taaruf opens for early access
+
+If you have questions, feedback, or you'd like to be among the first to test Taaruf, we'd love to hear from you. Your thoughts genuinely shape what we build.
+
+JazakAllah Khairan for being here from the start. We can't wait to build Taaruf alongside you.
+
+Bāraka Allāhu fīk,
+The Taaruf team
+
+—
+You're receiving this because you joined the Taaruf waitlist.
+`;
+
+const WELCOME_HTML = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome to Taaruf</title>
+</head>
+<body style="margin:0; padding:0; background:#f5efe6; font-family: Georgia, 'Times New Roman', serif; color:#1a1f2e;">
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">${WELCOME_PREVIEW}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f5efe6;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px; background:#fbf7ef; border:1px solid #d9cfbb;">
+          <tr>
+            <td style="padding:36px 36px 4px;">
+              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11px; letter-spacing:0.22em; color:#b8533a; text-transform:uppercase;">Taaruf &middot; تَعَارُف</div>
+              <h1 style="margin:18px 0 0; font-family: Georgia, 'Times New Roman', serif; font-style:italic; font-weight:400; font-size:34px; line-height:1.1; color:#1a1f2e; letter-spacing:-1px;">
+                Welcome to Taaruf.
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 36px 16px;">
+              <table role="presentation" width="160" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="border-top:1px solid #d9cfbb; border-bottom:1px solid #d9cfbb; height:6px; line-height:6px; font-size:0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 36px 36px; font-family: Georgia, serif; font-size:16px; line-height:1.65; color:#3d4456;">
+              <p style="margin:0 0 16px;">At Taaruf, we want to make one of the most important conversations of your life feel calm again. So many of us hit the same quiet roadblock: you're getting to know someone for marriage and you don't actually know what to ask to be sure this is <em style="color:#b8533a; font-style:italic;">half your deen</em>. Scraping questions together from Reddit threads or generic apps shouldn't be the answer — and it doesn't have to be.</p>
+              <p style="margin:0 0 16px;">Our goal is to give Muslims a structured, mahram-supervised conversation built around the things that actually matter to a Muslim home: deen, family vision, lifestyle, career &amp; finances, and the way two souls quietly fit together.</p>
+              <p style="margin:0 0 8px;">As a new contact, you can expect:</p>
+              <ul style="margin:0 0 20px; padding-left:18px;">
+                <li style="margin-bottom:6px;">An email when Taaruf opens for early access</li>
+              </ul>
+              <p style="margin:0 0 16px;">If you have questions, feedback, or you'd like to be among the first to test Taaruf, we'd love to hear from you. Your thoughts genuinely shape what we build.</p>
+              <p style="margin:0 0 24px;">JazakAllah Khairan for being here from the start. We can't wait to build Taaruf alongside you.</p>
+              <p style="margin:0; font-style:italic; color:#1a1f2e;">Bāraka Allāhu fīk,<br />The Taaruf team</p>
+            </td>
+          </tr>
+        </table>
+        <div style="margin-top:18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size:11px; color:#6b6f7d;">
+          You're receiving this because you joined the Taaruf waitlist.
+        </div>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+async function sendWelcomeEmail(apiKey, to) {
+  const from = process.env.RESEND_FROM_EMAIL;
+  if (!from) {
+    console.error('waitlist: skipping welcome — RESEND_FROM_EMAIL not set');
+    return;
+  }
+
+  const payload = {
+    from,
+    to: [to],
+    subject: WELCOME_SUBJECT,
+    html: WELCOME_HTML,
+    text: WELCOME_TEXT,
+  };
+  if (process.env.RESEND_REPLY_TO) {
+    payload.reply_to = process.env.RESEND_REPLY_TO;
+  }
+
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!r.ok) {
+    const detail = await r.text().catch(() => '');
+    console.error('waitlist: welcome send failed', r.status, detail);
+  }
 }
 
 module.exports = async (req, res) => {
@@ -100,10 +216,8 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'server_misconfigured' });
   }
 
-  // Resend's create-contact returns 422 if the email already exists in the
-  // audience; treat that — and 409 if they ever align with REST norms — as
-  // success so duplicate signups don't error out.
-  const resendRes = await fetch(
+  // 1) Add to audience. Resend returns 422 on duplicate; treat as success.
+  const audienceRes = await fetch(
     `https://api.resend.com/audiences/${encodeURIComponent(audienceId)}/contacts`,
     {
       method: 'POST',
@@ -115,11 +229,25 @@ module.exports = async (req, res) => {
     },
   );
 
-  if (resendRes.ok || resendRes.status === 409 || resendRes.status === 422) {
-    return res.status(200).json({ ok: true });
+  const alreadyOnList =
+    audienceRes.status === 409 || audienceRes.status === 422;
+  if (!audienceRes.ok && !alreadyOnList) {
+    const detail = await audienceRes.text().catch(() => '');
+    console.error('waitlist: resend audience add failed', audienceRes.status, detail);
+    return res.status(502).json({ error: 'upstream_failed' });
   }
 
-  const detail = await resendRes.text().catch(() => '');
-  console.error('waitlist: resend failed', resendRes.status, detail);
-  return res.status(502).json({ error: 'upstream_failed' });
+  // 2) Send the welcome email. Only for first-time signups — duplicates
+  // skip the welcome so we don't re-email someone who already has it.
+  // Failure here is logged but doesn't fail the request: the contact is
+  // already on the list, so the launch broadcast will still reach them.
+  if (!alreadyOnList) {
+    try {
+      await sendWelcomeEmail(apiKey, email);
+    } catch (err) {
+      console.error('waitlist: welcome send threw', err);
+    }
+  }
+
+  return res.status(200).json({ ok: true });
 };
