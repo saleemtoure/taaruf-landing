@@ -174,7 +174,7 @@ svg.logo { display: block; }
 
 /* ─────────────────────────── HERO ─────────────────────────── */
 .hero {
-  padding: 80px 0 96px;
+  padding: 56px 0 64px;
   border-bottom: 1px solid var(--rule-2);
 }
 .hero-grid {
@@ -227,7 +227,7 @@ h1.display .arabic {
   line-height: 1;
 }
 .hero-rule {
-  margin: 26px 0 22px;
+  margin: 20px 0 16px;
 }
 .double-rule {
   width: 240px;
@@ -238,16 +238,16 @@ h1.display .arabic {
   font-family: var(--serif);
   font-style: italic;
   font-size: 19px;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--ink-2);
   max-width: 480px;
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 .hero-cta {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 36px;
+  margin-bottom: 8px;
 }
 .btn {
   display: inline-flex;
@@ -390,15 +390,15 @@ h1.display .arabic {
 }
 
 /* ─────────────────────────── SECTIONS ─────────────────────────── */
-.block { padding: 104px 0; border-top: 1px solid var(--rule-2); }
-@media (max-width: 720px) { .block { padding: 72px 0; } }
+.block { padding: 68px 0; border-top: 1px solid var(--rule-2); }
+@media (max-width: 720px) { .block { padding: 52px 0; } }
 
 .section-head {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: end;
   gap: 32px;
-  margin-bottom: 56px;
+  margin-bottom: 36px;
 }
 @media (max-width: 720px) {
   .section-head { grid-template-columns: 1fr; gap: 14px; }
@@ -435,7 +435,7 @@ h1.display .arabic {
 .step {
   background: var(--card);
   border: 1px solid var(--rule);
-  padding: 32px 28px;
+  padding: 22px 22px 24px;
   position: relative;
 }
 .step .index {
@@ -444,7 +444,7 @@ h1.display .arabic {
   font-size: 13px;
   color: var(--terra);
   letter-spacing: 0.04em;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .step .icon-wrap {
   width: 56px;
@@ -498,7 +498,7 @@ h1.display .arabic {
 }
 @media (max-width: 720px) { .signup-simple h2 { font-size: 38px; } }
 .signup-rule {
-  margin: 22px 0;
+  margin: 16px 0;
   display: flex;
   justify-content: center;
 }
@@ -506,9 +506,9 @@ h1.display .arabic {
   font-family: var(--serif);
   font-style: italic;
   font-size: 17px;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--ink-2);
-  margin: 0 auto 28px;
+  margin: 0 auto 20px;
   max-width: 460px;
 }
 
@@ -554,6 +554,24 @@ h1.display .arabic {
   transition: background 0.15s ease;
 }
 .form-card .submit:hover { background: var(--terra); }
+.form-card .submit:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-card .hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.form-card .form-error {
+  margin-top: 10px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--terra-deep);
+  text-align: center;
+}
+:root[data-theme="dark"] .form-card .form-error { color: var(--terra); }
 
 .success-msg { display: none; }
 .form-card.success > form { display: none; }
@@ -593,8 +611,8 @@ h1.display .arabic {
 }
 
 /* ─────────────────────────── FOUNDER NOTE ─────────────────────────── */
-.note { padding: 104px 0; border-top: 1px solid var(--rule); }
-@media (max-width: 720px) { .note { padding: 64px 0; } }
+.note { padding: 68px 0; border-top: 1px solid var(--rule); }
+@media (max-width: 720px) { .note { padding: 48px 0; } }
 .note-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -707,7 +725,7 @@ h1.display .arabic {
 /* ─────────────────────────── FOOTER ─────────────────────────── */
 .foot {
   background: var(--paper-deep);
-  padding: 56px 0 32px;
+  padding: 36px 0 24px;
   border-top: 1px solid var(--rule);
 }
 .foot-simple {
@@ -715,7 +733,7 @@ h1.display .arabic {
   justify-content: space-between;
   align-items: center;
   gap: 24px;
-  margin-bottom: 36px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
 }
 .foot-link {
@@ -743,10 +761,10 @@ h1.display .arabic {
 
 /* ─────────────────────────── PHONE MOCKUPS (steps) ─────────────────────────── */
 .phone {
-  margin: 4px auto 22px;
+  margin: 2px auto 16px;
   width: 100%;
   max-width: 210px;
-  aspect-ratio: 9 / 18;
+  aspect-ratio: 9 / 16.5;
   background: var(--ink);
   border-radius: 24px;
   padding: 7px;
