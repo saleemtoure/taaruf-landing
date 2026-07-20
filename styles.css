@@ -502,6 +502,18 @@ h1.display .arabic {
   display: flex;
   justify-content: center;
 }
+/* The closing CTA reuses .hero-cta, which is left-aligned flex for the hero.
+   This block is centred, so re-centre it and give it room to breathe. */
+.signup-cta {
+  justify-content: center;
+  margin-top: 26px;
+}
+.signup-arabic {
+  margin-top: 28px;
+  font-size: 20px;
+  color: var(--terra);
+  opacity: 0.85;
+}
 .signup-simple .lede {
   font-family: var(--serif);
   font-style: italic;
