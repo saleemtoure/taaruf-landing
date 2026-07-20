@@ -73,12 +73,22 @@
           The minimum we need to run a session: the answers you actually
           write, your chosen display name, and — only if you make an account
           — your email address. You can use Taaruf without making an account
-          at all. We do not ask for, or store, anything we don't need.
+          at all. We do not ask for, or store, anything we don't need. If you
+          donate, we keep the amount and the payment's reference, plus a name
+          and message if you leave them — never your card details, and we do
+          not ask for an email address for a donation.
         </p>
 
         <h2>What we don't collect</h2>
         <ul>
-          <li>No IP addresses, browser fingerprints, or device details.</li>
+          <li>
+            No IP addresses, browser fingerprints, or device details — we read
+            none of it, and none of it reaches our database. One caveat, because
+            it is true of every website: our host sees the IP and browser of
+            each request in its own short-lived server logs, simply because
+            that is how a page gets delivered. We do not collect it, export it,
+            or connect it to anything you write.
+          </li>
           <li>No selling or sharing of your data with advertisers, ever.</li>
           <li>No third-party analytics that profile you across the web.</li>
           <li>No public profiles. There is no feed. There is no leaderboard.</li>
@@ -86,11 +96,17 @@
 
         <h2>Where it is held</h2>
         <p>
-          Our database runs in the EU, and what you write in a session never
-          leaves the EEA. There is one exception, and it is Google sign-in:
-          choose it and Google handles that sign-in in the United States. If
-          you would rather nothing at all left the EEA, use an email and
-          password, or stay anonymous.
+          Your sessions are stored in the EU. We would rather be precise than
+          reassuring here: the companies that run our backend and our hosting
+          are American, and their terms allow data to reach the United States
+          for things like monitoring and support, under the EU's Standard
+          Contractual Clauses. So "stored in the EU" is the promise we can
+          make; "never leaves the EEA" is not, and we are not going to make it.
+          If you sign in with Google, Google handles that step in the United
+          States — you can skip it by using an email and password, or staying
+          anonymous. If you donate, the payment is handled by Mollie in the
+          Netherlands. The full detail is in the
+          <a href="https://app.taaruf.dev/privacy">in-app privacy policy</a>.
         </p>
 
         <h2>Who can see your answers</h2>
@@ -116,7 +132,8 @@
           Data is encrypted in transit and at rest. Every read and write is
           authorised on the server, one operation at a time. Session codes
           and mahram tokens are generated with a cryptographic random number
-          generator, and passwords are stored hashed. We treat your trust the
+          generator, and passwords are stored using industry-standard cryptographic
+          hashing. We treat your trust the
           way we'd want our own treated.
         </p>
 

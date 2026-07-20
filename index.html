@@ -603,8 +603,13 @@
     <!--
       Was the waitlist form. Taaruf is live, so the page sends people to the
       app instead. The Resend endpoint, its form handler and the form styles
-      are gone — Loops is the email provider now, so an updates list would be
-      built there rather than on a second provider.
+      are gone. NOTE: an earlier version of this comment said "Loops is the
+      email provider now" — that was wrong and is worth correcting, because it
+      reads as though mail already works. Nothing sends email. Loops is the
+      *intended* provider and LOOPS_API_KEY is kept set on both Convex
+      deployments, but it is dormant and wired to nothing; see taaruf-app's
+      ROADMAP §3. An updates list would still be built there rather than on a
+      second provider.
     -->
     <section class="signup-wrap" id="signup">
       <div class="wrap block signup-simple">
