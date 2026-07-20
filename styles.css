@@ -567,6 +567,14 @@ h1.display .arabic {
   margin-bottom: 18px;
 }
 .note p em { color: var(--terra); font-style: italic; }
+.bismillah {
+  font-family: var(--arabic);
+  direction: rtl;
+  font-size: 19px;
+  color: var(--terra);
+  margin-bottom: 18px;
+  opacity: 0.9;
+}
 .signoff {
   font-family: var(--arabic);
   font-size: 26px;
