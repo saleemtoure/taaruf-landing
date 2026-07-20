@@ -111,7 +111,7 @@
         </a>
         <div class="nav-links">
           <a href="#how" class="link">How it works</a>
-          <a href="#note" class="link">Our intent</a>
+          <!-- Restore with the founder note below. <a href="#note" class="link">Our intent</a> -->
           <button
             type="button"
             class="theme-toggle"
@@ -149,7 +149,7 @@
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
           </button>
-          <a href="#signup" class="nav-cta">Join waitlist</a>
+          <a href="https://app.taaruf.dev" class="nav-cta">Open Taaruf</a>
         </div>
       </div>
     </nav>
@@ -158,7 +158,7 @@
     <header class="hero" id="top">
       <div class="wrap hero-grid">
         <div class="hero-left">
-          <div class="ribbon"><span class="dot"></span>Launching soon</div>
+          <div class="ribbon"><span class="dot"></span>Free to use</div>
 
           <h1 class="display">
             Getting to know,<br />
@@ -173,12 +173,13 @@
           <p class="lede">
             A calm, private space for Muslims considering marriage — a guided
             conversation between two souls, with the dignity of really knowing
-            someone before you decide.
+            someone before you decide. Open it in your browser and start a
+            session in under a minute.
           </p>
 
           <div class="hero-cta">
-            <a class="btn btn-primary" href="#signup">
-              Get started
+            <a class="btn btn-primary" href="https://app.taaruf.dev">
+              Start a session
               <svg
                 width="14"
                 height="14"
@@ -598,67 +599,57 @@
       </div>
     </section>
 
-    <!-- ─────────────────────────── EMAIL SIGNUP ─────────────────────────── -->
+    <!-- ─────────────────────────── START ─────────────────────────── -->
+    <!--
+      Was the waitlist form (Resend-backed, api/subscribe.js). Taaruf is live,
+      so the page sends people to the app instead. The endpoint and the form
+      styles are left in place in case an updates list is wanted later.
+    -->
     <section class="signup-wrap" id="signup">
       <div class="wrap block signup-simple">
-        <div class="kicker">Be the first to know</div>
-        <h2>Join the waitlist.</h2>
+        <div class="kicker">No account needed to begin</div>
+        <h2>Start a session.</h2>
         <div class="signup-rule">
           <svg width="200" height="14" viewBox="0 0 240 14">
             <use href="#double-rule" />
           </svg>
         </div>
-        <p class="lede">Get notified when Taaruf launches.</p>
+        <p class="lede">
+          Pick a question set, share the code with the person you're speaking
+          to, and invite a mahram. It runs in the browser — nothing to install.
+        </p>
 
-        <div class="form-card" id="formcard">
-          <form id="waitlistForm" novalidate>
-            <div class="email-field" id="emailField">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="your@email.com"
-                autocomplete="email"
-                required
-              />
-              <button type="submit" class="submit">Notify me</button>
-            </div>
-            <div class="hp" aria-hidden="true">
-              <label for="website">Website</label>
-              <input
-                type="text"
-                id="website"
-                name="website"
-                tabindex="-1"
-                autocomplete="off"
-              />
-            </div>
-          </form>
-
-          <div class="success-msg" role="status">
-            <div class="check">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-            </div>
-            <h4>You're on the list.</h4>
-            <p>We'll write the day Taaruf launches.</p>
-            <div class="arabic">بَارَكَ اللهُ فِيكَ</div>
-          </div>
+        <div class="hero-cta signup-cta">
+          <a class="btn btn-primary" href="https://app.taaruf.dev">
+            Open Taaruf
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M5 12h14" />
+              <path d="m13 5 7 7-7 7" />
+            </svg>
+          </a>
         </div>
+
+        <div class="arabic signup-arabic">بَارَكَ اللهُ فِيكَ</div>
       </div>
     </section>
 
     <!-- ─────────────────────────── FOUNDER NOTE ─────────────────────────── -->
+    <!--
+      HIDDEN, PENDING A REWRITE (see ROADMAP.md in taaruf-app).
+      Saleem's call: the substance is right but the wording needs revisiting
+      now that Taaruf is live rather than "coming soon". Left in the file
+      verbatim rather than deleted so the rewrite starts from these words.
+      The "Our intent" nav link is hidden alongside it; restore both together.
+
     <section class="note" id="note">
       <div class="wrap note-grid">
         <div>
@@ -691,6 +682,8 @@
         </div>
       </div>
     </section>
+    -->
+
 
     <!-- ─────────────────────────── FOOTER ─────────────────────────── -->
     <footer class="foot">

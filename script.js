@@ -1,10 +1,13 @@
-// Theme toggle: persists choice in localStorage, falls back to OS preference.
+// Theme toggle: persists the visitor's choice in localStorage.
+//
+// Light is the default for a first visit, deliberately — the OS preference is
+// no longer consulted. The page is a calm, paper-toned reading surface and
+// light is the intended presentation; a dark-by-default first impression for
+// anyone whose OS happens to be dark was showing the design as it wasn't meant
+// to be seen. Anyone who prefers dark is one tap away, and that choice sticks.
 const root = document.documentElement;
 const stored = localStorage.getItem("theme");
-const prefersDark =
-  window.matchMedia &&
-  window.matchMedia("(prefers-color-scheme: dark)").matches;
-const initialTheme = stored ?? (prefersDark ? "dark" : "light");
+const initialTheme = stored ?? "light";
 root.setAttribute("data-theme", initialTheme);
 
 const themeBtn = document.getElementById("themeToggle");
@@ -20,6 +23,11 @@ if (themeBtn) {
 // Waitlist form: POSTs the email to /api/waitlist (Resend audience). On
 // success, clears the input and flips the card to its success state. Errors
 // re-enable the submit button and surface a quiet inline message.
+//
+// DORMANT — the form markup was removed when Taaruf went live and the page
+// started sending visitors to the app instead. The guard below means this is a
+// no-op rather than a console error. Kept, along with api/waitlist, so an
+// "occasional updates" list can be restored without rebuilding the plumbing.
 const form = document.getElementById("waitlistForm");
 const formCard = document.getElementById("formcard");
 if (form && formCard) {
