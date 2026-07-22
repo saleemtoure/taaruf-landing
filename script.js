@@ -1,6 +1,6 @@
 // Theme toggle: persists the visitor's choice in localStorage.
 //
-// Light is the default for a first visit, deliberately — the OS preference is
+// Light is the default for a first visit, deliberately; the OS preference is
 // no longer consulted. The page is a calm, paper-toned reading surface and
 // light is the intended presentation; a dark-by-default first impression for
 // anyone whose OS happens to be dark was showing the design as it wasn't meant
