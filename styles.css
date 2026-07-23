@@ -665,9 +665,16 @@ h1.display .arabic {
   transition: color 0.15s ease;
 }
 .foot-link:hover { color: var(--terra); }
+.foot-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 .foot-studio {
   font-size: 12px;
   color: var(--ink-3);
+  line-height: 1.7;
   margin-bottom: 18px;
 }
 .foot-studio a {
