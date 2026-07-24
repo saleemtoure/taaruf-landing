@@ -46,6 +46,12 @@
   --card-shadow: 0 2px 24px -8px color-mix(in oklab, var(--accent) 30%, transparent),
                  0 14px 40px -20px rgba(0, 0, 0, 0.6);
   --band-bg:    oklch(0.14 0.012 var(--h));
+  /* Opaque, unlike --surface. The hero's floating cards bob on a transform and
+     used to sit on --surface (95% transparent) plus a backdrop-filter, so the
+     browser re-blurred the watermark and the phone behind them every frame and
+     they visibly flickered. 7% rather than the 5% of --surface makes up for the
+     lightening the blur used to contribute. */
+  --float-bg:   color-mix(in oklab, #fff 7%, var(--bg));
   color-scheme: dark;
 }
 
@@ -79,6 +85,7 @@
   --shadow:      0 40px 80px -34px oklch(0.5 0.04 var(--h) / 0.4);
   --card-shadow: 0 10px 30px -14px oklch(0.5 0.05 var(--h) / 0.28);
   --band-bg:    oklch(0.22 0.02 var(--h));
+  --float-bg:   var(--surface); /* already opaque white in daybreak */
   color-scheme: light;
 }
 
@@ -576,17 +583,24 @@ h1.display .ac { color: var(--accent); }
 .lockbtn.full { width: 100%; justify-content: center; }
 
 /* ─────────────────────────── FLOATING CARDS ─────────────────────────── */
+/* No backdrop-filter here, deliberately — see --float-bg. These are the only
+   elements on the page that animate a transform, and a blurred backdrop on a
+   moving element is re-sampled every frame. will-change promotes each card to
+   its own layer so the text rasterises once instead of at fractional offsets
+   on every tick. */
 .float {
   position: absolute;
   z-index: 4;
-  background: var(--surface);
+  background: var(--float-bg);
   border: 1px solid var(--border-2);
   border-radius: 16px;
   padding: 13px 15px;
   box-shadow: var(--card-shadow);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   animation: bob 6s ease-in-out infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .float { will-change: auto; }
 }
 .float .ft-h { display: flex; align-items: center; gap: 9px; }
 .float .ic {
@@ -653,7 +667,7 @@ h1.display .ac { color: var(--accent); }
   place-items: center;
   font: 700 11px/1 var(--disp);
   color: #fff;
-  border: 2px solid var(--surface);
+  border: 2px solid var(--float-bg); /* the card they sit on, not --surface */
 }
 .float .avpair span + span { margin-left: -8px; }
 .float .aligned {
