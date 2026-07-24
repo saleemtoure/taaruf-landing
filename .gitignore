@@ -1,0 +1,3 @@
+
+# Leftover agent worktrees. Embedded git repos — never part of the site.
+.claude/worktrees/
