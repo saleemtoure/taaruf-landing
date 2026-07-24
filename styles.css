@@ -656,6 +656,10 @@ h1.display .ac { color: var(--accent); }
 .float.f-stat { left: 0; bottom: 5%; max-width: 172px; animation-delay: -3.4s; }
 .float.f-wali { right: 3%; top: 12%; animation-delay: -1.2s; }
 .float.f-noswipe { right: 6%; top: 46%; animation-delay: -2.8s; }
+/* Sits in the mid-right gap. That slot is free at the two-column hero width
+   because f-noswipe is hidden there, and it clears f-wali above and f-reveal
+   below. Odd animation-delay so it does not bob in step with its neighbours. */
+.float.f-free { right: 6%; top: 45%; animation-delay: -1.6s; }
 .float.f-reveal { right: 2%; bottom: 8%; max-width: 220px; animation-delay: -4.2s; }
 
 .float .avpair { display: flex; }
@@ -1123,6 +1127,7 @@ footer.foot {
   .hero-grid .float.f-q { left: -8%; top: 6%; }
   .hero-grid .float.f-stat { left: -6%; bottom: 8%; }
   .hero-grid .float.f-wali { right: -8%; top: 8%; }
+  .hero-grid .float.f-free { right: -8%; top: 43%; }
   .hero-grid .float.f-reveal { right: -6%; bottom: 8%; }
 }
 @container page (max-width: 900px) {
